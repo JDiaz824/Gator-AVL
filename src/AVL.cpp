@@ -16,7 +16,7 @@ AVLTree::AVLTree() {
 };
 
 AVLTree::~AVLTree() {
-    delete(root);
+    deleteTree(root);
 };
 
 int AVLTree::getHeight(treeNode* root) {
@@ -118,18 +118,19 @@ AVLTree::treeNode* AVLTree::remove(treeNode* root, int id, int &count) {
             count++;
         }
         else if (root->left != nullptr) {
-            treeNode* temp = root->left;
-            *root = *temp;
-            delete(temp);
+            treeNode* temp = root;
+            root = root->left;
+            delete temp;
             count++;
         }
         else if (root->right != nullptr) {
-            treeNode* temp = root->right;
-            *root = *temp;
-            delete(temp);
+            treeNode* temp = root;
+            root = root->right;
+            delete temp;
             count++;
         }
         else {
+            delete root;
             root = nullptr;
             count++;
         }
@@ -142,6 +143,24 @@ AVLTree::treeNode* AVLTree::remove(treeNode* root, int id, int &count) {
     }
 
     root->height = 1 + max(getHeight(root->left), getHeight(root->right));
+
+    if (getHeight(root->left) - getHeight(root->right) < -1) {
+        if (getHeight(root->right->left) - getHeight(root->right->right) > 0) {
+            return rotateRightLeft(root);
+        }
+        else {
+            return rotateLeft(root);
+        }
+    }
+    else if (getHeight(root->left) - getHeight(root->right) > 1) {
+        if (getHeight(root->left->left) - getHeight(root->left->right) < 0) {
+            return rotateLeftRight(root);
+        }
+        else {
+            return rotateRight(root);
+        }
+    }
+
     return root;
 }
 
@@ -216,7 +235,6 @@ AVLTree::treeNode* AVLTree::removeInorder(treeNode* root, int N, int &count) {
         removeInorder(root->right, N, count);
     }
 
-    root->height = 1 + max(getHeight(root->left), getHeight(root->right));
     return root;
 }
 
@@ -340,4 +358,12 @@ bool AVLTree::validID(int id) {
         return true;
     }
     return false;
+}
+
+void AVLTree::deleteTree(treeNode* root) {
+    if (root) {
+        deleteTree(root->left);
+        deleteTree(root->right);
+        delete root;
+    }
 }

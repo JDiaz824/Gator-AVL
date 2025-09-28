@@ -46,6 +46,8 @@ private:
 
     bool validName(string name);
     bool validID(int id);
+
+    void deleteTree(treeNode* root);
 public:
     AVLTree();
     ~AVLTree();
