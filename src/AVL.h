@@ -27,7 +27,7 @@ private:
         };
     };
     treeNode* root;
-    unordered_set<int> idList;
+    unordered_set<string> idList;
 
     treeNode* insert(treeNode* root, string name, int id);
     treeNode* remove(treeNode* root, int id, int &count);
@@ -45,17 +45,16 @@ private:
     treeNode* removeInorder(treeNode* root, int N, int &count);
 
     bool validName(string name);
-    bool validID(int id);
+    bool validID(string id);
 
     void deleteTree(treeNode* root);
 public:
     AVLTree();
     ~AVLTree();
 
-    void insert(string name, int id);
-    void remove(int id);
-    void search(int id);
-    void search(string name);
+    void insert(string name, string id);
+    void remove(string id);
+    void search(string input);
     void printInorder();
     void printPreorder();
     void printPostorder();

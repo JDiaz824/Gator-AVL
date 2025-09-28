@@ -142,6 +142,10 @@ AVLTree::treeNode* AVLTree::remove(treeNode* root, int id, int &count) {
         root->right = remove(root->right, id, count);
     }
 
+    if (root == nullptr) {
+        return root;
+    }
+
     root->height = 1 + max(getHeight(root->left), getHeight(root->right));
 
     if (getHeight(root->left) - getHeight(root->right) < -1) {
@@ -228,7 +232,7 @@ AVLTree::treeNode* AVLTree::removeInorder(treeNode* root, int N, int &count) {
     count++;
 
     if (N == count) {
-        remove(root->id);
+        remove(to_string(root->id));
         return root;
     }
     else if (N > count) {
@@ -242,19 +246,22 @@ AVLTree::treeNode* AVLTree::removeInorder(treeNode* root, int N, int &count) {
 
 
 
-void AVLTree::insert(string name, int id) {
+void AVLTree::insert(string name, string id) {
     if (idList.find(id) != idList.end() || !validName(name) || !validID(id)) {
         cout << "unsuccessful" << endl;
     }
     else {
-        this->root = insert(this->root, name, id);
+        this->root = insert(this->root, name, stoi(id));
         cout << "successful" << endl;
         idList.insert(id);
     }
 }
-void AVLTree::remove(int id) {
+void AVLTree::remove(string id) {
     int count = 0;
-    this->root = remove(this->root, id, count);
+
+    if (validID(id)) {
+        this->root = remove(this->root, stoi(id), count);
+    }
 
     if (count > 0) {
         cout << "successful" << endl;
@@ -263,23 +270,27 @@ void AVLTree::remove(int id) {
         cout << "unsuccessful" << endl;
     }
 }
-void AVLTree::search(int id) {
-    search(this->root, id);
-
-}
-void AVLTree::search(string name) {
-    vector<int> idList;
-    search(this->root, name, idList);
-
-    if (idList.size() == 0) {
-        cout << "unsuccessful" << endl;
+void AVLTree::search(string input) {
+    if (validID(input)) {
+        search(this->root, stoi(input));
     }
-    else {
-        for (int id : idList) {
-            cout << id << endl;
+    else if (validName(input)) {
+        vector<int> idList;
+        search(this->root, input, idList);
+
+        if (idList.size() == 0) {
+            cout << "unsuccessful" << endl;
+        }
+        else {
+            for (int id : idList) {
+                cout << id << endl;
+            }
         }
     }
-    return;
+    else {
+        cout << "unsuccessful" << endl;
+    }
+
 }
 void AVLTree::printInorder() {
     vector<string> nameList;
@@ -349,15 +360,16 @@ bool AVLTree::validName(string name) {
     }
     return true;
 }
-bool AVLTree::validID(int id) {
-    if (id < 0) {
+bool AVLTree::validID(string id) {
+    for (char c : id) {
+        if (!(c >= '0' && c <= '9')) {
+            return false;
+        }
+    }
+    if (id.length() != 8) {
         return false;
     }
-    string stringID = to_string(id);
-    if (stringID.size() == 8) {
-        return true;
-    }
-    return false;
+    return true;
 }
 
 void AVLTree::deleteTree(treeNode* root) {

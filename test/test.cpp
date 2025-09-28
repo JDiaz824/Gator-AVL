@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <unordered_set>
 #include <vector>
 
 // uncomment and replace the following with your own headers
@@ -18,7 +19,7 @@ TEST_CASE("Invalid Name", "[flag]"){
 	cout.rdbuf(output.rdbuf());
 
 	AVLTree tree;
-	tree.insert("D4vid", 12345678);
+	tree.insert("Jo2han", "12345678");
 
 	cout.rdbuf(buffer);
 
@@ -31,7 +32,7 @@ TEST_CASE("Short ID", "[flag]") {
 	cout.rdbuf(output.rdbuf());
 
 	AVLTree tree;
-	tree.insert("Johan", 1234567);
+	tree.insert("Johan", "1234567");
 
 	cout.rdbuf(buffer);
 
@@ -44,32 +45,38 @@ TEST_CASE("Long ID", "[flag]") {
 	cout.rdbuf(output.rdbuf());
 
 	AVLTree tree;
-	tree.insert("D4vid", 123456789);
+	tree.insert("Johan", "123456789");
 
 	cout.rdbuf(buffer);
 
 	REQUIRE(output.str() == "unsuccessful\n");
 }
 
-// TEST_CASE("Invalid ID", "[flag]") {
-// 	ostringstream output;
-// 	streambuf* buffer = cout.rdbuf();
-// 	cout.rdbuf(output.rdbuf());
-//
-// 	AVLTree tree;
-// 	tree.insert("D4vid", 10000);
-//
-// 	cout.rdbuf(buffer);
-//
-// 	REQUIRE(output.str() == "unsuccessful\n");
-// }
+TEST_CASE("Invalid ID", "[flag]") {
+	ostringstream output;
+	streambuf* buffer = cout.rdbuf();
+	cout.rdbuf(output.rdbuf());
 
-// TEST_CASE("Invalid Name & ID", "[flag]"){
-// 	string name = "J02an";
-// 	string ID = "gh82ryg8";
-// 	REQUIRE(name == "Johan");
-// 	REQUIRE(ID == "12824358");
-// }
+	AVLTree tree;
+	tree.insert("Johan", "17sf39f8");
+
+	cout.rdbuf(buffer);
+
+	REQUIRE(output.str() == "unsuccessful\n");
+}
+
+TEST_CASE("Invalid Name & ID", "[flag]"){
+	ostringstream output;
+	streambuf* buffer = cout.rdbuf();
+	cout.rdbuf(output.rdbuf());
+
+	AVLTree tree;
+	tree.insert("Jo23an", "17sf39f8");
+
+	cout.rdbuf(buffer);
+
+	REQUIRE(output.str() == "unsuccessful\n");
+}
 
 TEST_CASE("AVL Insert", "[flag]"){
 	ostringstream output;
@@ -77,9 +84,9 @@ TEST_CASE("AVL Insert", "[flag]"){
 	cout.rdbuf(output.rdbuf());
 
 	AVLTree tree;
-	tree.insert("Johan", 12345678);
-	tree.insert("Gerald", 23456789);
-	tree.insert("Pablo", 34567890);
+	tree.insert("Johan", "12345678");
+	tree.insert("Gerald", "23456789");
+	tree.insert("Pablo", "34567890");
 	tree.printInorder();
 
 	cout.rdbuf(buffer);
@@ -93,10 +100,10 @@ TEST_CASE("Delete nonexistent node", "[flag]") {
 	cout.rdbuf(output.rdbuf());
 
 	AVLTree tree;
-	tree.insert("Johan", 12345678);
-	tree.insert("Gerald", 23456789);
-	tree.insert("Pablo", 34567890);
-	tree.remove(11223344);
+	tree.insert("Johan", "12345678");
+	tree.insert("Gerald", "23456789");
+	tree.insert("Pablo", "34567890");
+	tree.remove("11223344");
 
 	cout.rdbuf(buffer);
 
@@ -109,9 +116,9 @@ TEST_CASE("Search nonexistent node", "[flag]") {
 	cout.rdbuf(output.rdbuf());
 
 	AVLTree tree;
-	tree.insert("Johan", 12345678);
-	tree.insert("Gerald", 23456789);
-	tree.insert("Pablo", 34567890);
+	tree.insert("Johan", "12345678");
+	tree.insert("Gerald", "23456789");
+	tree.insert("Pablo", "34567890");
 	tree.search("David");
 
 	cout.rdbuf(buffer);
@@ -138,9 +145,9 @@ TEST_CASE("Rotate Left-Left", "[flag]") {
 	cout.rdbuf(output.rdbuf());
 
 	AVLTree tree;
-	tree.insert("C", 30000000);
-	tree.insert("B", 20000000);
-	tree.insert("A", 10000000);
+	tree.insert("C", "30000000");
+	tree.insert("B", "20000000");
+	tree.insert("A", "10000000");
 	tree.printInorder();
 
 	cout.rdbuf(buffer);
@@ -154,9 +161,9 @@ TEST_CASE("Rotate Right-Right", "[flag]") {
 	cout.rdbuf(output.rdbuf());
 
 	AVLTree tree;
-	tree.insert("A", 10000000);
-	tree.insert("B", 20000000);
-	tree.insert("C", 30000000);
+	tree.insert("A", "10000000");
+	tree.insert("B", "20000000");
+	tree.insert("C", "30000000");
 	tree.printInorder();
 
 	cout.rdbuf(buffer);
@@ -170,9 +177,9 @@ TEST_CASE("Rotate Left-Right", "[flag]") {
 	cout.rdbuf(output.rdbuf());
 
 	AVLTree tree;
-	tree.insert("C", 30000000);
-	tree.insert("A", 10000000);
-	tree.insert("B", 20000000);
+	tree.insert("C", "30000000");
+	tree.insert("A", "10000000");
+	tree.insert("B", "20000000");
 	tree.printInorder();
 
 	cout.rdbuf(buffer);
@@ -186,9 +193,9 @@ TEST_CASE("Rotate Right-Left", "[flag]") {
 	cout.rdbuf(output.rdbuf());
 
 	AVLTree tree;
-	tree.insert("A", 10000000);
-	tree.insert("C", 30000000);
-	tree.insert("B", 20000000);
+	tree.insert("A", "10000000");
+	tree.insert("C", "30000000");
+	tree.insert("B", "20000000");
 	tree.printInorder();
 
 	cout.rdbuf(buffer);
@@ -202,10 +209,10 @@ TEST_CASE("Deletion (no children)", "[flag]") {
 	cout.rdbuf(output.rdbuf());
 
 	AVLTree tree;
-	tree.insert("A", 10000000);
-	tree.insert("C", 30000000);
-	tree.insert("B", 20000000);
-	tree.remove(30000000);
+	tree.insert("A", "10000000");
+	tree.insert("C", "30000000");
+	tree.insert("B", "20000000");
+	tree.remove("30000000");
 	tree.printInorder();
 
 	cout.rdbuf(buffer);
@@ -220,15 +227,15 @@ TEST_CASE("Deletion (one child)", "[flag]") {
 	cout.rdbuf(output.rdbuf());
 
 	AVLTree tree;
-	tree.insert("A", 10000000);
+	tree.insert("A", "10000000");
 	successes += "successful\n";
-	tree.insert("C", 30000000);
+	tree.insert("C", "30000000");
 	successes += "successful\n";
-	tree.insert("B", 20000000);
+	tree.insert("B", "20000000");
 	successes += "successful\n";
-	tree.insert("D", 40000000);
+	tree.insert("D", "40000000");
 	successes += "successful\n";
-	tree.remove(30000000);
+	tree.remove("30000000");
 	successes += "successful\n";
 	tree.printInorder();
 
@@ -238,25 +245,61 @@ TEST_CASE("Deletion (one child)", "[flag]") {
 }
 
 TEST_CASE("Deletion (two children)", "[flag]") {
+	string successes = "";
+	ostringstream output;
+	streambuf* buffer = cout.rdbuf();
+	cout.rdbuf(output.rdbuf());
 
+	AVLTree tree;
+	tree.insert("A", "10000000");
+	successes += "successful\n";
+	tree.insert("C", "30000000");
+	successes += "successful\n";
+	tree.insert("B", "20000000");
+	successes += "successful\n";
+	tree.insert("D", "35000000");
+	successes += "successful\n";
+	tree.insert("E", "25000000");
+	successes += "successful\n";
+	tree.remove("30000000");
+	successes += "successful\n";
+	tree.printInorder();
+
+	cout.rdbuf(buffer);
+
+	REQUIRE(output.str() == successes + "A, B, E, D\n");
 }
 
-// TEST_CASE("100 Nodes", "[flag]"){
-// 	AVLTree inputTree;
-// 	std::vector<int> expectedOutput, actualOutput;
-//
-// 	for(int i = 0; i < 100; i++)
-// 	{
-// 		int randomInput = rand();
-// 		if (std::count(expectedOutput.begin(), expectedOutput.end(), randomInput) == 0)
-// 		{
-// 			expectedOutput.push_back(randomInput);
-// 			inputTree.insert(randomInput);
-// 		}
-// 	}
-//
-// 	actualOutput = inputTree.inOrder();
-// 	REQUIRE(expectedOutput.size() == actualOutput.size());
-// 	std::sort(expectedOutput.begin(), expectedOutput.end());
-// 	REQUIRE(expectedOutput == actualOutput);
-// }
+TEST_CASE("100 Nodes", "[flag]"){
+	string successes = "";
+	ostringstream output;
+	streambuf* buffer = cout.rdbuf();
+	cout.rdbuf(output.rdbuf());
+
+	AVLTree tree;
+	string expected = "";
+
+	for(int i = 10000000; i < 10000100; i++)
+	{
+		tree.insert("test", to_string(i));
+		expected += "successful\n";
+	}
+
+	int count = 0;
+	unordered_set<int> idList;
+	while (count < 10) {
+		int randomNode = rand() % 101 + 10000000;
+		if (idList.find(randomNode) != idList.end()) {
+			continue;
+		}
+		else {
+			idList.insert(randomNode);
+			tree.remove(to_string(randomNode));
+			expected += "successful\n";
+			count++;
+		}
+	}
+
+	cout.rdbuf(buffer);
+	REQUIRE(output.str() == expected);
+}
