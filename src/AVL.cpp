@@ -400,9 +400,11 @@ void AVLTree::printPostorder() {
 }
 
 void AVLTree::printLevelCount() {
+    //Prints 0 if there's no nodes
     if (this->root == nullptr) {
         cout << "0" << endl;
     }
+    //Prints the height of the root, which is how many levels there are
     else {
         cout << this->root->height << endl;
     }
