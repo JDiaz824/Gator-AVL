@@ -4,6 +4,7 @@
 
 using namespace std;
 
+//Used to remove quotation marks if applicable to input
 string removeQuotes(string &input) {
 	if (input.length() >= 2 && input.front() == '"' && input.back() == '"') {
 		return input.substr(1, input.length() - 2);
@@ -13,6 +14,8 @@ string removeQuotes(string &input) {
 
 int main(){
 	AVLTree tree;
+
+	//Used in the loop to make sure the proper number of functions are able to be done
 	int count;
 	cin >> count;
 
@@ -20,6 +23,7 @@ int main(){
 		string function;
 		cin >> function;
 
+		//Function calls
 		if (function == "insert") {
 			string name;
 			string id;

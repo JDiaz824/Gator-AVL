@@ -26,11 +26,15 @@ private:
             right = nullptr;
         };
     };
+
+    //Helper Functions:
+
     treeNode* root;
     unordered_set<string> idList;
 
     treeNode* insert(treeNode* root, string name, int id);
     treeNode* remove(treeNode* root, int id, int &count);
+
     int getHeight(treeNode* root);
     treeNode* rotateLeft(treeNode* root);
     treeNode* rotateRight(treeNode* root);
@@ -39,10 +43,12 @@ private:
 
     void search(treeNode* root, int id);
     void search(treeNode* root, string name, vector<int> &idList);
+
     void printInorder(treeNode* root, vector<string> &nameList);
     void printPreorder(treeNode* root, vector<string> &nameList);
     void printPostorder(treeNode* root, vector<string> &nameList);
-    treeNode* removeInorder(treeNode* root, int N, int &count);
+
+    treeNode* removeInorder(treeNode* root, int N, int &count, bool &deleted);
 
     bool validName(string name);
     bool validID(string id);
@@ -52,6 +58,8 @@ public:
     AVLTree();
     ~AVLTree();
 
+    //Main functions:
+
     void insert(string name, string id);
     void remove(string id);
     void search(string input);
@@ -60,8 +68,6 @@ public:
     void printPostorder();
     void printLevelCount();
     void removeInorder(int N);
-
-
 };
 
 
