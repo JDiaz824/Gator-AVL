@@ -42,7 +42,7 @@ AVLTree::treeNode* AVLTree::insert(treeNode* root, string name, int id) {
     root->height = 1 + max(getHeight(root->left), getHeight(root->right));
 
     if (getHeight(root->left) - getHeight(root->right) < -1) {
-        if (getHeight(root->right->left) - getHeight(root->right->right) > 1) {
+        if (getHeight(root->right->left) - getHeight(root->right->right) > 0) {
             return rotateRightLeft(root);
         }
         else {
@@ -50,7 +50,7 @@ AVLTree::treeNode* AVLTree::insert(treeNode* root, string name, int id) {
         }
     }
     else if (getHeight(root->left) - getHeight(root->right) > 1) {
-        if (getHeight(root->left->left) - getHeight(root->left->right) < -1) {
+        if (getHeight(root->left->left) - getHeight(root->left->right) < 0) {
             return rotateLeftRight(root);
         }
         else {
@@ -232,11 +232,57 @@ AVLTree::treeNode* AVLTree::removeInorder(treeNode* root, int N, int &count) {
     count++;
 
     if (N == count) {
-        remove(to_string(root->id));
-        return root;
+        if (root->left != nullptr && root->right != nullptr) {
+            treeNode* temp = root->right;
+            while (temp->left != nullptr) {
+                temp = temp->left;
+            }
+
+            root->id = temp->id;
+            root->name = temp->name;
+
+            root->right = remove(root->right, temp->id, count);
+        }
+        else if (root->left != nullptr) {
+            treeNode* temp = root;
+            root = root->left;
+            delete temp;
+        }
+        else if (root->right != nullptr) {
+            treeNode* temp = root;
+            root = root->right;
+            delete temp;
+        }
+        else {
+            delete root;
+            root = nullptr;
+        }
     }
     else if (N > count) {
         removeInorder(root->right, N, count);
+    }
+
+    if (root == nullptr) {
+        return root;
+    }
+
+    root->height = 1 + max(getHeight(root->left), getHeight(root->right));
+
+    if (getHeight(root->left) - getHeight(root->right) < -1) {
+        if (getHeight(root->right->left) - getHeight(root->right->right) > 0) {
+            return rotateRightLeft(root);
+        }
+        else {
+            return rotateLeft(root);
+        }
+    }
+    else if (getHeight(root->left) - getHeight(root->right) > 1) {
+        if (getHeight(root->left->left) - getHeight(root->left->right) < 0) {
+            return rotateLeftRight(root);
+        }
+        else {
+            return rotateRight(root);
+        }
     }
 
     return root;
@@ -248,11 +294,11 @@ AVLTree::treeNode* AVLTree::removeInorder(treeNode* root, int N, int &count) {
 
 void AVLTree::insert(string name, string id) {
     if (idList.find(id) != idList.end() || !validName(name) || !validID(id)) {
-        cout << "unsuccessful" << endl;
+        cout << "unsuccessful";
     }
     else {
         this->root = insert(this->root, name, stoi(id));
-        cout << "successful" << endl;
+        cout << "successful";
         idList.insert(id);
     }
 }
@@ -264,10 +310,10 @@ void AVLTree::remove(string id) {
     }
 
     if (count > 0) {
-        cout << "successful" << endl;
+        cout << "successful";
     }
     else {
-        cout << "unsuccessful" << endl;
+        cout << "unsuccessful";
     }
 }
 void AVLTree::search(string input) {
@@ -279,7 +325,7 @@ void AVLTree::search(string input) {
         search(this->root, input, idList);
 
         if (idList.size() == 0) {
-            cout << "unsuccessful" << endl;
+            cout << "unsuccessful";
         }
         else {
             for (int id : idList) {
@@ -288,7 +334,7 @@ void AVLTree::search(string input) {
         }
     }
     else {
-        cout << "unsuccessful" << endl;
+        cout << "unsuccessful";
     }
 
 }
@@ -298,7 +344,7 @@ void AVLTree::printInorder() {
 
     for (size_t i = 0; i < nameList.size(); i++) {
         if (i + 1 >= nameList.size()) {
-            cout << nameList[i] << endl;
+            cout << nameList[i];
         }
         else {
             cout << nameList[i] << ", ";
@@ -311,7 +357,7 @@ void AVLTree::printPreorder() {
 
     for (size_t i = 0; i < nameList.size(); i++) {
         if (i + 1 >= nameList.size()) {
-            cout << nameList[i] << endl;
+            cout << nameList[i];
         }
         else {
             cout << nameList[i] << ", ";
@@ -324,7 +370,7 @@ void AVLTree::printPostorder() {
 
     for (size_t i = 0; i < nameList.size(); i++) {
         if (i + 1 >= nameList.size()) {
-            cout << nameList[i] << endl;
+            cout << nameList[i];
         }
         else {
             cout << nameList[i] << ", ";
@@ -343,10 +389,10 @@ void AVLTree::removeInorder(int N) {
     int count = -1;
     this->root = removeInorder(this->root, N, count);
     if (count == N) {
-        cout << "successful" << endl;
+        cout << "successful";
     }
     else {
-        cout << "unsuccessful" << endl;
+        cout << "unsuccessful";
     }
 }
 

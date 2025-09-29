@@ -23,7 +23,7 @@ TEST_CASE("Invalid Name", "[flag]"){
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == "unsuccessful\n");
+	REQUIRE(output.str() == "unsuccessful");
 }
 
 TEST_CASE("Short ID", "[flag]") {
@@ -36,7 +36,7 @@ TEST_CASE("Short ID", "[flag]") {
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == "unsuccessful\n");
+	REQUIRE(output.str() == "unsuccessful");
 }
 
 TEST_CASE("Long ID", "[flag]") {
@@ -49,7 +49,7 @@ TEST_CASE("Long ID", "[flag]") {
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == "unsuccessful\n");
+	REQUIRE(output.str() == "unsuccessful");
 }
 
 TEST_CASE("Invalid ID", "[flag]") {
@@ -62,7 +62,7 @@ TEST_CASE("Invalid ID", "[flag]") {
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == "unsuccessful\n");
+	REQUIRE(output.str() == "unsuccessful");
 }
 
 TEST_CASE("Invalid Name & ID", "[flag]"){
@@ -75,7 +75,7 @@ TEST_CASE("Invalid Name & ID", "[flag]"){
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == "unsuccessful\n");
+	REQUIRE(output.str() == "unsuccessful");
 }
 
 TEST_CASE("AVL Insert", "[flag]"){
@@ -91,7 +91,7 @@ TEST_CASE("AVL Insert", "[flag]"){
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == "successful\nsuccessful\nsuccessful\nJohan, Gerald, Pablo\n");
+	REQUIRE(output.str() == "successfulsuccessfulsuccessfulJohan, Gerald, Pablo");
 }
 
 TEST_CASE("Delete nonexistent node", "[flag]") {
@@ -107,7 +107,7 @@ TEST_CASE("Delete nonexistent node", "[flag]") {
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == "successful\nsuccessful\nsuccessful\nunsuccessful\n");
+	REQUIRE(output.str() == "successfulsuccessfulsuccessfulunsuccessful");
 }
 
 TEST_CASE("Search nonexistent node", "[flag]") {
@@ -123,7 +123,7 @@ TEST_CASE("Search nonexistent node", "[flag]") {
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == "successful\nsuccessful\nsuccessful\nunsuccessful\n");
+	REQUIRE(output.str() == "successfulsuccessfulsuccessfulunsuccessful");
 }
 
 TEST_CASE("printInorder with no nodes", "[flag]") {
@@ -152,7 +152,7 @@ TEST_CASE("Rotate Left-Left", "[flag]") {
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == "successful\nsuccessful\nsuccessful\nA, B, C\n");
+	REQUIRE(output.str() == "successfulsuccessfulsuccessfulA, B, C");
 }
 
 TEST_CASE("Rotate Right-Right", "[flag]") {
@@ -168,7 +168,7 @@ TEST_CASE("Rotate Right-Right", "[flag]") {
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == "successful\nsuccessful\nsuccessful\nA, B, C\n");
+	REQUIRE(output.str() == "successfulsuccessfulsuccessfulA, B, C");
 }
 
 TEST_CASE("Rotate Left-Right", "[flag]") {
@@ -184,7 +184,7 @@ TEST_CASE("Rotate Left-Right", "[flag]") {
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == "successful\nsuccessful\nsuccessful\nA, B, C\n");
+	REQUIRE(output.str() == "successfulsuccessfulsuccessfulA, B, C");
 }
 
 TEST_CASE("Rotate Right-Left", "[flag]") {
@@ -200,7 +200,7 @@ TEST_CASE("Rotate Right-Left", "[flag]") {
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == "successful\nsuccessful\nsuccessful\nA, B, C\n");
+	REQUIRE(output.str() == "successfulsuccessfulsuccessfulA, B, C");
 }
 
 TEST_CASE("Deletion (no children)", "[flag]") {
@@ -217,7 +217,7 @@ TEST_CASE("Deletion (no children)", "[flag]") {
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == "successful\nsuccessful\nsuccessful\nsuccessful\nA, B\n");
+	REQUIRE(output.str() == "successfulsuccessfulsuccessfulsuccessfulA, B");
 }
 
 TEST_CASE("Deletion (one child)", "[flag]") {
@@ -228,20 +228,20 @@ TEST_CASE("Deletion (one child)", "[flag]") {
 
 	AVLTree tree;
 	tree.insert("A", "10000000");
-	successes += "successful\n";
+	successes += "successful";
 	tree.insert("C", "30000000");
-	successes += "successful\n";
+	successes += "successful";
 	tree.insert("B", "20000000");
-	successes += "successful\n";
+	successes += "successful";
 	tree.insert("D", "40000000");
-	successes += "successful\n";
+	successes += "successful";
 	tree.remove("30000000");
-	successes += "successful\n";
+	successes += "successful";
 	tree.printInorder();
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == successes + "A, B, D\n");
+	REQUIRE(output.str() == successes + "A, B, D");
 }
 
 TEST_CASE("Deletion (two children)", "[flag]") {
@@ -252,22 +252,22 @@ TEST_CASE("Deletion (two children)", "[flag]") {
 
 	AVLTree tree;
 	tree.insert("A", "10000000");
-	successes += "successful\n";
+	successes += "successful";
 	tree.insert("C", "30000000");
-	successes += "successful\n";
+	successes += "successful";
 	tree.insert("B", "20000000");
-	successes += "successful\n";
+	successes += "successful";
 	tree.insert("D", "35000000");
-	successes += "successful\n";
+	successes += "successful";
 	tree.insert("E", "25000000");
-	successes += "successful\n";
+	successes += "successful";
 	tree.remove("30000000");
-	successes += "successful\n";
+	successes += "successful";
 	tree.printInorder();
 
 	cout.rdbuf(buffer);
 
-	REQUIRE(output.str() == successes + "A, B, E, D\n");
+	REQUIRE(output.str() == successes + "A, B, E, D");
 }
 
 TEST_CASE("100 Nodes", "[flag]"){
@@ -282,7 +282,7 @@ TEST_CASE("100 Nodes", "[flag]"){
 	for(int i = 10000000; i < 10000100; i++)
 	{
 		tree.insert("test", to_string(i));
-		expected += "successful\n";
+		expected += "successful";
 	}
 
 	int count = 0;
@@ -295,7 +295,7 @@ TEST_CASE("100 Nodes", "[flag]"){
 		else {
 			idList.insert(randomNode);
 			tree.remove(to_string(randomNode));
-			expected += "successful\n";
+			expected += "successful";
 			count++;
 		}
 	}
